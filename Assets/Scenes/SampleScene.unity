@@ -1114,13 +1114,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-    _prefabsGO:
-    - {fileID: 5471609717431905157, guid: 6c658c853f2bdf2488b59371b935b23e, type: 3}
-    - {fileID: 4649790357482450462, guid: c50a97a48af30ea4b8cd9d17a9c32434, type: 3}
+    _bricksGO:
     - {fileID: 3528720260920176403, guid: f822c23d3bd40ec40a5097a5756bc6b3, type: 3}
-    _prefabsPreviewGO:
-    - {fileID: 3621955484712118525, guid: b5a1a25889367504ca11899882253e61, type: 3}
-    - {fileID: 8326330953770187752, guid: df822c791476b9841ae97ea4fbb31601, type: 3}
+    _blockersGO:
+    - {fileID: 8541274496064351544, guid: 6ebb3a37bf638b94f90b03d7f302fca6, type: 3}
+    - {fileID: 4649790357482450462, guid: c50a97a48af30ea4b8cd9d17a9c32434, type: 3}
+    _bricksPreviewGO:
     - {fileID: 3497349659027839162, guid: f059a9065ea98a94d80929b080e2daf2, type: 3}
   config:
     previewCamM:
@@ -1138,8 +1137,10 @@ MonoBehaviour:
       _bricksPoolTR: {fileID: 713545701}
     _maxBrickPreview: 3
     _rotateBrickSpeed: 45
-    _rotateRadius: 5
+    _rotateRadius: 4
     _endGameTriggerY: 3
+    _savedAngle: 0
+    _minAngle: 33
     _cameraOffset: {x: 0, y: 7, z: 10}
     _brickPreviewOffset: {x: 5, y: 0, z: 0}
 --- !u!4 &2076585794

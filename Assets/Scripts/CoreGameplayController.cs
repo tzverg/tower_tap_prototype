@@ -9,11 +9,13 @@ public enum BrickState { IDLE, FALL, LOCK }
 public class Prefabs
 {
     internal object brickPrefabGO;
-    [SerializeField] private List<GameObject> _prefabsGO;
-    [SerializeField] private List<GameObject> _prefabsPreviewGO;
+    [SerializeField] private List<GameObject> _bricksGO;
+    [SerializeField] private List<GameObject> _blockersGO;
+    [SerializeField] private List<GameObject> _bricksPreviewGO;
 
-    public List<GameObject> PrefabsGO => _prefabsGO;
-    public List<GameObject> PrefabsPreviewGO => _prefabsPreviewGO;
+    public List<GameObject> BricksGO => _bricksGO;
+    public List<GameObject> BlockersGO => _blockersGO;
+    public List<GameObject> BricksPreviewGO => _bricksPreviewGO;
 }
 
 [Serializable]
@@ -51,6 +53,8 @@ public class Config
     [SerializeField] public float _rotateBrickSpeed;
     [SerializeField] public float _rotateRadius;
     [SerializeField] public float _endGameTriggerY;
+    /*[SerializeField]*/ public float _savedAngle;
+    [SerializeField] public float _minAngle;
 
     [SerializeField] private Vector3 _cameraOffset;
     [SerializeField] private Vector3 _brickPreviewOffset;
@@ -58,19 +62,26 @@ public class Config
     private int _lockedBrick;
     private int _maxBrick;
 
-    private Vector3 _startBrickPos;
+    private float _requestedBrickRot;
 
-    /*[SerializeField]*/ private List<int> _brickPool;
+    private Vector3 _brickPos;
+    private Vector3 _brickRot;
+
+    /*[SerializeField]*/
+    private List<int> _brickPool;
 
     public int LockedBrick { get { return _lockedBrick; } set { _lockedBrick = value; } }
     public int MaxBrick { get { return _maxBrick; } set { _maxBrick = value; } }
     public int MaxBrickPreview { get { return _maxBrickPreview; }}
 
+    public float SavedAngle { get { return _savedAngle; } set { _savedAngle = value; } }
+    public float MinAngle { get { return _minAngle; } set { _minAngle = value; } }
     public float RotateBrickSpeed { get { return _rotateBrickSpeed; } }
     public float RotateRadius { get { return _rotateRadius; } }
     public float EndGameTriggerY { get { return _endGameTriggerY; } }
 
-    public Vector3 StartBrickPos { get { return _startBrickPos; } set { _startBrickPos = value; } }
+    public Vector3 BrickPos { get { return _brickPos; } set { _brickPos = value; } }
+    public Vector3 BrickRot { get { return _brickRot; } set { _brickRot = value; } }
     public Vector3 CameraOffset { get { return _cameraOffset; } }
     public Vector3 BrickPreviewOffset { get { return _brickPreviewOffset; } }
 
