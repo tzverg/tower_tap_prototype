@@ -48,34 +48,43 @@ public class Config
     public PreviewCameraModel previewCamM;
     public ConnectedComponents connComp;
 
-    [SerializeField] public int _maxBrickPreview;
+    [SerializeField] private int _maxBrickPreview;
+    [SerializeField] private int _maxBlocker;
 
-    [SerializeField] public float _rotateBrickSpeed;
-    [SerializeField] public float _rotateRadius;
-    [SerializeField] public float _endGameTriggerY;
-    /*[SerializeField]*/ public float _savedAngle;
-    [SerializeField] public float _minAngle;
+    [SerializeField] private float _rotateBrickSpeed;
+    [SerializeField] private float _rotateRadius;
+    [SerializeField] private float _endGameTriggerY;
+    [SerializeField] private float _minAngle;
 
     [SerializeField] private Vector3 _cameraOffset;
     [SerializeField] private Vector3 _brickPreviewOffset;
 
     private int _lockedBrick;
+    private int _lockedBlocker;
     private int _maxBrick;
+    private int _bricksOnRow;
 
-    private float _requestedBrickRot;
+    private float _savedAngle;
+    private float _requestedAngle;
 
     private Vector3 _brickPos;
     private Vector3 _brickRot;
 
     /*[SerializeField]*/
     private List<int> _brickPool;
+    private List<int> _blockerPool;
+    [SerializeField] private List<int> _brickLayers;
 
     public int LockedBrick { get { return _lockedBrick; } set { _lockedBrick = value; } }
     public int MaxBrick { get { return _maxBrick; } set { _maxBrick = value; } }
+    public int BricksOnRow { get { return _bricksOnRow; } set { _bricksOnRow = value; } }
+    public int LockedBlocker { get { return _lockedBlocker; } set { _lockedBlocker = value; } }
+    public int MaxBlocker { get { return _maxBlocker; } }
     public int MaxBrickPreview { get { return _maxBrickPreview; }}
 
     public float SavedAngle { get { return _savedAngle; } set { _savedAngle = value; } }
     public float MinAngle { get { return _minAngle; } set { _minAngle = value; } }
+    public float RequestedAngle { get { return _requestedAngle; } set { _requestedAngle = value; } }
     public float RotateBrickSpeed { get { return _rotateBrickSpeed; } }
     public float RotateRadius { get { return _rotateRadius; } }
     public float EndGameTriggerY { get { return _endGameTriggerY; } }
@@ -86,6 +95,8 @@ public class Config
     public Vector3 BrickPreviewOffset { get { return _brickPreviewOffset; } }
 
     public List<int> BrickPool { get { return _brickPool; } set { _brickPool = value; } }
+    public List<int> BlockerPool { get { return _blockerPool; } set { _blockerPool = value; } }
+    public List<int> BrickLayers { get { return _brickLayers; } set { _brickLayers = value; } }
 }
 
 public class CoreGameplayController : MonoBehaviour

@@ -4,6 +4,7 @@ using UnityEngine;
 public class BrickModel : MonoBehaviour
 {
     private bool _freezeUpdate;
+    private bool _freezeTriggerUpdate;
     private Transform _endTriggerTR;
     private Rigidbody _rigidBody;
 
@@ -28,43 +29,61 @@ public class BrickModel : MonoBehaviour
 
     private void Update()
     {
-        UpdateBrickState();
+        if (!_freezeUpdate)
+        {
+            UpdateBrickState();
+        }
     }
 
     private void UpdateBrickState()
     {
-        if (!_freezeUpdate)
+        switch (State)
         {
-            switch (State)
-            {
-                case BrickState.IDLE:
-                    if (!_rigidBody.IsSleeping())
-                    {
-                        State = BrickState.FALL;
-                    }
-                    break;
-                case BrickState.FALL:
-                    if (_rigidBody.IsSleeping())
-                    {
-                        State = BrickState.LOCK;
-                    }
-                    break;
-                case BrickState.LOCK:
-                    _freezeUpdate = true;
-                    OnAddLockedBrick?.Invoke();
-                    break;
-            }
+            case BrickState.IDLE:
+                if (!_rigidBody.IsSleeping())
+                {
+                    State = BrickState.FALL;
+                }
+                break;
+            case BrickState.FALL:
+                if (_rigidBody.IsSleeping())
+                {
+                    State = BrickState.LOCK;
+                }
+                break;
+            case BrickState.LOCK:
+                OnAddLockedBrick?.Invoke();
+                FreezeBlock();//TODO solve solution wrong calculate locked block (on last layers before win - OnAddLockedBrick do not invoked)
+                break;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (State == BrickState.LOCK)
+        if (!_freezeTriggerUpdate)
         {
-            if (_endTriggerTR.Equals(other.transform))
+            if (State == BrickState.LOCK)
             {
-                OnEndTheGame?.Invoke();
+                if (_endTriggerTR.Equals(other.transform))
+                {
+                    OnEndTheGame?.Invoke();
+                }
+                else
+                {
+                    _freezeTriggerUpdate = true;
+                }
             }
         }
+    }
+
+    private void FreezeBlock()
+    {
+        _rigidBody.constraints = RigidbodyConstraints.FreezePositionX |
+                                 RigidbodyConstraints.FreezePositionY | 
+                                 RigidbodyConstraints.FreezePositionZ;
+
+        _rigidBody.freezeRotation = true;
+
+        _freezeUpdate = true;
     }
 }
